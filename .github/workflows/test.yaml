@@ -28,4 +28,4 @@ jobs:
           $content -replace 'group_id = ""', "group_id = ""$org_id"""
           $content | Set-Content -Path .\Cargo.toml
 
-          cat .\Cargo.toml
+          cat ${{GITHUB.WORKSPACE}}/Cargo.toml
