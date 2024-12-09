@@ -14,25 +14,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: replace group_id value with org_id
-        run: |
-          which sed
-          sed --version
-          which awk
-          awk --version
-          cat ${{GITHUB.WORKSPACE}}/Cargo.toml
-          
-      - name: pshell
-        shell: pwsh
-        run: |
-          $org_id = "5678"
-          $content = Get-Content -Path .\Cargo1.toml
-          $content -replace 'group_id = ""', "group_id = ""$org_id"""
-          $content | Set-Content -Path .\Cargo1.toml
-          (Get-Content -Path ${{GITHUB.WORKSPACE}}/Cargo1.toml) -replace 'group_id\s*=\s*".", "group_id = ""$org_id""" | Set-Content -Path ${{GITHUB.WORKSPACE}}/Cargo1.toml'
-
-          cat ${{GITHUB.WORKSPACE}}/Cargo1.toml
-
-      - name: replace group_id value with org_id
         shell: pwsh
         run: |
           # Org ID
@@ -44,7 +25,7 @@ jobs:
           $content = Get-Content $tomlFile
 
           # Replace the specific key-value pair
-          $content = $content -replace '^(group_id\s*=\s*)".*"', '${1}"$org_id"'
+          $content = $content -replace '^(group_id\s*=\s*)".*"', '${1}$org_id'
 
           # Write the updated content back to the file
           Set-Content -Path $tomlFile -Value $content
