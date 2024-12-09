@@ -35,6 +35,8 @@ jobs:
       - name: replace group_id value with org_id
         shell: pwsh
         run: |
+          # Org ID
+          $org_id = "5678"
           # File path
           $tomlFile = "Cargo.toml"
 
@@ -42,7 +44,7 @@ jobs:
           $content = Get-Content $tomlFile
 
           # Replace the specific key-value pair
-          $content = $content -replace '^(group_id\s*=\s*)".*"', '${1}"56789"'
+          $content = $content -replace '^(group_id\s*=\s*)".*"', '${1}"$org_id"'
 
           # Write the updated content back to the file
           Set-Content -Path $tomlFile -Value $content
