@@ -16,6 +16,12 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v4
 
+      - name: json
+        id: json
+        run: |
+          org_id=${{env.ORG_ID}} 
+          echo "org_id=$org_id" >> $GITHUB_OUTPUT
+
       - name: replace group_id value with org_id
         shell: pwsh
         run: |
@@ -28,7 +34,7 @@ jobs:
           $content = Get-Content $tomlFile
 
           # Replace the specific key-value pair
-          $content = $content -replace '^(group_id\s*=\s*)".*"', '${1}${{env.ORG_ID}}'
+          $content = $content -replace '^(group_id\s*=\s*)".*"', '${1}${{steps.json.outputs.org_id}}'
 
           # Write the updated content back to the file
           Set-Content -Path $tomlFile -Value $content
