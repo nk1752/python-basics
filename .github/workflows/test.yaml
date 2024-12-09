@@ -31,3 +31,21 @@ jobs:
           (Get-Content -Path ${{GITHUB.WORKSPACE}}/Cargo1.toml) -replace 'group_id\s*=\s*".", "group_id = ""$org_id""" | Set-Content -Path ${{GITHUB.WORKSPACE}}/Cargo1.toml'
 
           cat ${{GITHUB.WORKSPACE}}/Cargo1.toml
+
+      - name: replace group_id value with org_id
+        shell: pwsh
+        run: |
+          # File path
+          $tomlFile = "Cargo.toml"
+
+          # Read file content
+          $content = Get-Content $tomlFile
+
+          # Replace the specific key-value pair
+          $content = $content -replace '^(group_id\s*=\s*)".*"', '${1}"56789"'
+
+          # Write the updated content back to the file
+          Set-Content -Path $tomlFile -Value $content
+
+          cat ${{GITHUB.WORKSPACE}}/Cargo.toml
+
