@@ -17,7 +17,11 @@ jobs:
         run: |
           which sed
           sed --version
+          which awk
+          awk --version
           org_id = "5678"
-          sed -i "s/group_id = \"\"/group_id = \"$org_id\"/g" Cargo.toml
+          #sed -i "s/group_id = \"\"/group_id = \"$org_id\"/g" Cargo.toml
+          #awk '{gsub(/^host = ".*"$/, "host = \"example.com\"")}1' config.toml > temp.toml && mv temp.toml config.toml
+
 
           cat Cargo.toml
