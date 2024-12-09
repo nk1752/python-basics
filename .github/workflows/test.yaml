@@ -1,0 +1,21 @@
+name: toml-test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - name: replace group_id value with org_id
+        run: |
+          org_id = "5678"
+          sed -i "s/group_id = \"\"/group_id = \"$org_id\"/g" Cargo.toml
+
+          cat Cargo.toml
