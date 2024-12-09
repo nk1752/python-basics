@@ -25,7 +25,7 @@ jobs:
           $content = Get-Content $tomlFile
 
           # Replace the specific key-value pair
-          $content = $content -replace '^(group_id\s*=\s*)".*"', '${1}$org_id'
+          $content = $content -replace '^(group_id\s*=\s*)".*"', '${1}${org_id}'
 
           # Write the updated content back to the file
           Set-Content -Path $tomlFile -Value $content
